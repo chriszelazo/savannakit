@@ -21,6 +21,8 @@ public protocol SyntaxTextViewDelegate: class {
 
 	func didChangeSelectedRange(_ syntaxTextView: SyntaxTextView, selectedRange: NSRange)
 	
+    func textViewWillBeginEditing(_ textView: TextView)
+    
 	func textViewDidBeginEditing(_ syntaxTextView: SyntaxTextView)
 	
 	func lexerForSource(_ source: String) -> Lexer
@@ -218,7 +220,7 @@ open class SyntaxTextView: View {
 			self.contentMode = .redraw
 			textView.contentMode = .topLeft
 		
-			textViewSelectedRangeObserver = contentTextView.observe(\UITextView.selectedTextRange) { [weak self] (textView, value) in
+			textViewSelectedRangeObserver = contentTextView.observe(\UITextView.selectedTextRange) { [weak self] (currentTextView, value) in
 			
 				if let `self` = self {
 					self.delegate?.didChangeSelectedRange(self, selectedRange: self.contentTextView.selectedRange)
@@ -346,6 +348,7 @@ open class SyntaxTextView: View {
             textView.backgroundColor = theme.backgroundColor
             textView.theme = theme
 			textView.font = theme.font
+            textView.tintColor = theme.caretColor
 			
 			didUpdateText()
 		}

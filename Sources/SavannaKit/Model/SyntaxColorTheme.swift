@@ -44,6 +44,8 @@ public protocol SyntaxColorTheme {
 	var gutterStyle: GutterStyle { get }
 	
 	var font: Font { get }
+    
+    var caretColor: Color { get }
 	
 	var backgroundColor: Color { get }
 

@@ -74,42 +74,42 @@ class InnerTextView: TextView {
 			return
 		}
 		
-		let textView = self
+		let currentTextView = self
 
 		if theme.lineNumbersStyle == nil  {
 
 			hideGutter()
 
-			let gutterRect = CGRect(x: 0, y: rect.minY, width: textView.gutterWidth, height: rect.height)
+			let gutterRect = CGRect(x: 0, y: rect.minY, width: currentTextView.gutterWidth, height: rect.height)
 			let path = BezierPath(rect: gutterRect)
 			path.fill()
 			
 		} else {
 			
-			let components = textView.text.components(separatedBy: .newlines)
+			let components = currentTextView.text.components(separatedBy: .newlines)
 			
 			let count = components.count
 			
 			let maxNumberOfDigits = "\(count)".count
 			
-			textView.updateGutterWidth(for: maxNumberOfDigits)
+			currentTextView.updateGutterWidth(for: maxNumberOfDigits)
             
             var paragraphs: [Paragraph]
             
-            if let cached = textView.cachedParagraphs {
+            if let cached = currentTextView.cachedParagraphs {
                 
                 paragraphs = cached
                 
             } else {
                 
-                paragraphs = generateParagraphs(for: textView, flipRects: false)
-                textView.cachedParagraphs = paragraphs
+                paragraphs = generateParagraphs(for: currentTextView, flipRects: false)
+                currentTextView.cachedParagraphs = paragraphs
                 
             }
 			
 			theme.gutterStyle.backgroundColor.setFill()
 			
-			let gutterRect = CGRect(x: 0, y: rect.minY, width: textView.gutterWidth, height: rect.height)
+			let gutterRect = CGRect(x: 0, y: rect.minY, width: currentTextView.gutterWidth, height: rect.height)
 			let path = BezierPath(rect: gutterRect)
 			path.fill()
 			

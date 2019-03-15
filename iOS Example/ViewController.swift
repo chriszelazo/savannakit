@@ -31,6 +31,10 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: SyntaxTextViewDelegate {
+    func textViewWillBeginEditing(_ textView: TextView) {
+        
+    }
+    
 	
 	func didChangeText(_ syntaxTextView: SyntaxTextView) {
 		

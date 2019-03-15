@@ -189,17 +189,24 @@ extension SyntaxTextView {
 	
 	extension SyntaxTextView: UITextViewDelegate {
 		
-		open func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+		open func textView(_ currentTextView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
 			
 			return self.shouldChangeText(insertingText: text)
 		}
+        
+        public func textViewShouldBeginEditing(_ currentTextView: UITextView) -> Bool {
+            delegate?.textViewWillBeginEditing(currentTextView)
+            return true
+        }
 		
-		public func textViewDidBeginEditing(_ textView: UITextView) {
+		public func textViewDidBeginEditing(_ currentTextView: UITextView) {
 			// pass the message up to our own delegate
 			delegate?.textViewDidBeginEditing(self)
+            
+            currentTextView.inputAccessoryView = UIView()
 		}
 		
-		open func textViewDidChange(_ textView: UITextView) {
+		open func textViewDidChange(_ currentTextView: UITextView) {
 			
 			didUpdateText()
 			
@@ -222,7 +229,7 @@ extension SyntaxTextView {
 			
 		}
 	
-		open func textViewDidChangeSelection(_ textView: UITextView) {
+		open func textViewDidChangeSelection(_ currentTextView: UITextView) {
 			
 			contentDidChangeSelection()
 		}
